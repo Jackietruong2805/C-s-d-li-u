@@ -1,0 +1,53 @@
+CREATE DATABASE quanlidichvuchothuexehagiang;
+USE quanlidichvuchothuexehagiang;
+
+CREATE TABLE DoanhNghiepChoThue (
+	MaSoDN CHAR(10) PRIMARY KEY NOT NULL,	
+	TenDN NVARCHAR(300),
+	Email VARCHAR(100),
+	SDT NVARCHAR(10),
+	NgayDangKiKD DATETIME,
+	NgayBatDauHD DATETIME,
+	DangKiGiayPhepKDVT NCHAR(10),
+	DanhGia INT 
+)
+
+CREATE TABLE LoaiNganh(
+	MaNganh CHAR(4) NOT NULL PRIMARY KEY,
+	NoiDungNganh NVARCHAR(500),
+	GiayPhepKDVT NCHAR(10),
+)
+
+CREATE TABLE DN_MaNganh(
+	MaSoDN CHAR(10),
+	MaNganh CHAR(4),
+	PRIMARY KEY(MaSoDN, MaNganh),
+	FOREIGN KEY(MaSoDN) REFERENCES DoanhNghiepChoThue(MaSoDN),
+	FOREIGN KEY(MaNganh) REFERENCES LoaiNganh(MaNganh),
+)
+
+
+CREATE TABLE LoaiXeChoThue(
+	MaXe INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+	LoaiXe NVARCHAR(100),
+	MucDich NVARCHAR(1000),
+	MaNganh CHAR(4),
+	FOREIGN KEY(MaNganh) REFERENCES LoaiNganh(MaNganh),
+)
+
+CREATE TABLE DN_LoaiXe(
+	MaSoDN CHAR(10),
+	MaXe INT 
+	PRIMARY KEY (MaSoDN, MaXe),
+	FOREIGN KEY (MaSoDN) REFERENCES DoanhNghiepChoThue(MaSoDN),
+	FOREIGN KEY (MaXe) REFERENCES LoaiXeChoThue(MaXe),
+)
+
+CREATE TABLE HeThongChiNhanh(
+	MaSoChiNhanh INT  NOT NULL PRIMARY KEY IDENTITY(1, 1),
+	DiaChi NVARCHAR(255),	
+	Huyen NVARCHAR(50),
+	MaSoDN CHAR(10),
+	FOREIGN KEY (MaSoDN) REFERENCES DoanhNghiepChoThue(MaSoDN),
+)
+
